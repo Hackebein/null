@@ -19,9 +19,9 @@ jobs:
         run: npm install --prefix node
       - name: Build docker-compose.yml
         run: npm start --prefix node "../docker-compose.fails.yml" "${{ github.repository }}"
-      - name: Show docker-compose.yml
-        run: cat docker-compose.yml
       - name: Diff docker-compose.yml
         run: diff docker-compose.works.yml docker-compose.fails.yml
-      - name: Build container images
-        run: docker-compose build
+      - name: Build container(s) in docker-compose.works.yml
+        run: docker-compose build -f docker-compose.works.yml
+      - name: Build container(s) in docker-compose.fails.yml
+        run: docker-compose build -f docker-compose.fails.yml
