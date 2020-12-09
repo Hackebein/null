@@ -2,7 +2,9 @@ name: "default"
 on:
   push:
     branches:
-      - master
+    - master
+  schedule:
+    - cron: "0 4 * * *"
 jobs:
   ubuntu1604:
     runs-on: ubuntu-16.04
@@ -13,6 +15,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '8' # TODO: update to 14 (LTS)
+      - name: Install npm packages
+        run: npm install --prefix node
+      - name: Build docker-compose.yml
+        run: npm start --prefix node "../docker-compose.yml" "${{ github.repository }}"
+      - name: Show docker-compose.yml
+        run: cat docker-compose.yml
       - name: Build container images
         run: docker-compose build
   ubuntu1804:
@@ -24,6 +32,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '8' # TODO: update to 14 (LTS)
+      - name: Install npm packages
+        run: npm install --prefix node
+      - name: Build docker-compose.yml
+        run: npm start --prefix node "../docker-compose.yml" "${{ github.repository }}"
+      - name: Show docker-compose.yml
+        run: cat docker-compose.yml
       - name: Build container images
         run: docker-compose build
   ubuntu2004:
@@ -35,5 +49,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '8' # TODO: update to 14 (LTS)
+      - name: Install npm packages
+        run: npm install --prefix node
+      - name: Build docker-compose.yml
+        run: npm start --prefix node "../docker-compose.yml" "${{ github.repository }}"
+      - name: Show docker-compose.yml
+        run: cat docker-compose.yml
       - name: Build container images
         run: docker-compose build
