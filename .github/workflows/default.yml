@@ -6,7 +6,7 @@ on:
   schedule:
     - cron: "0 4 * * *"
 jobs:
-  ubuntu1604:
+  test:
     runs-on: ubuntu-16.04
     steps:
       - name: Checkout
@@ -18,42 +18,10 @@ jobs:
       - name: Install npm packages
         run: npm install --prefix node
       - name: Build docker-compose.yml
-        run: npm start --prefix node "../docker-compose.yml" "${{ github.repository }}"
+        run: npm start --prefix node "../docker-compose.fails.yml" "${{ github.repository }}"
       - name: Show docker-compose.yml
         run: cat docker-compose.yml
-      - name: Build container images
-        run: docker-compose build
-  ubuntu1804:
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '8' # TODO: update to 14 (LTS)
-      - name: Install npm packages
-        run: npm install --prefix node
-      - name: Build docker-compose.yml
-        run: npm start --prefix node "../docker-compose.yml" "${{ github.repository }}"
-      - name: Show docker-compose.yml
-        run: cat docker-compose.yml
-      - name: Build container images
-        run: docker-compose build
-  ubuntu2004:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '8' # TODO: update to 14 (LTS)
-      - name: Install npm packages
-        run: npm install --prefix node
-      - name: Build docker-compose.yml
-        run: npm start --prefix node "../docker-compose.yml" "${{ github.repository }}"
-      - name: Show docker-compose.yml
-        run: cat docker-compose.yml
+      - name: Diff docker-compose.yml
+        run: diff docker-compose.works.yml docker-compose.fails.yml
       - name: Build container images
         run: docker-compose build
