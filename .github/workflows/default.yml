@@ -2,25 +2,13 @@ name: "default"
 on:
   push:
     branches:
-    - master
-  schedule:
-    - cron: "0 4 * * *"
+      - master
 jobs:
   test:
     runs-on: ubuntu-16.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '8' # TODO: update to 14 (LTS)
-      - name: Install npm packages
-        run: npm install --prefix node
-      - name: Build docker-compose.yml
-        run: npm start --prefix node "../docker-compose.fails.yml" "$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
-      - name: Checksums
-        run: md5sum *.yml
       - name: Build container(s) in docker-compose.works.yml
         run: docker-compose -f docker-compose.works.yml build
       - name: Build container(s) in docker-compose.fails.yml
