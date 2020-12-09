@@ -9,6 +9,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '8' # TODO: update to 14 (LTS)
       - name: Build container images
         run: docker-compose build
   ubuntu1804:
@@ -16,6 +20,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '8' # TODO: update to 14 (LTS)
       - name: Build container images
         run: docker-compose build
   ubuntu2004:
@@ -23,5 +31,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '8' # TODO: update to 14 (LTS)
       - name: Build container images
         run: docker-compose build
