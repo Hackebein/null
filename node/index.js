@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Logger = require('logger').Logger;
+const yaml = require('js-yaml');
 const log = new Logger();
 
 
