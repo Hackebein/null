@@ -9,14 +9,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: File informations
-        run: |
-          md5sum *.yml
-          stat *.yml
       - name: Install node
         uses: actions/setup-node@v1
         with:
-          node-version: '8' # TODO: update to 14 (LTS)
+          node-version: '8'
       - name: Install npm packages
         run: npm install --prefix node
       - name: Build docker-compose.yml
