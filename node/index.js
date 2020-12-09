@@ -1,4 +1,5 @@
 const fs = require('fs');
+const Logger = require('logger').Logger;
 const log = new Logger();
 
 
