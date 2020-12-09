@@ -3,7 +3,6 @@ const Logger = require('logger').Logger;
 const yaml = require('js-yaml');
 const log = new Logger();
 
-
 const binary = process.argv.shift();
 const file = process.argv.shift();
 const output = process.argv.shift();
