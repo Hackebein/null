@@ -65,7 +65,7 @@ jobs:
             exit 1
           fi
       - name: Remove node_modules folder
-        run: rm node_modules
+        run: rm -rf node_modules
       - # Expecting: 'invalid reference format: repository name must be lowercase'
         # Actual behavior: 'Couldn't connect to Docker daemon at http+docker://localhost - is it running?'
         name: Build container(s) in docker-compose.fails.yml
