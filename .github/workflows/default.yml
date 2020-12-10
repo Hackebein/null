@@ -10,7 +10,7 @@ jobs:
         node-version: [14]
         #node-package: ["lodash", "tslib", "request", "debug", "prop-types", "ms", "chalk", "object-assign", "minimist", "loose-envify", "commander", "react", "vue", "js-tokens", "express", "underscore", "async", "regenerator-runtime", "moment", "readable-stream", "glob", "safe-buffer", "bluebird", "babel-runtime", "axios"]
         node-package: ["request"]
-        name: ["*.js", "*.json", "*.js.map", "*.ts", "*.coffee"]
+        name: ["*.json", "*.js.map", "*.ts", "*.coffee"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,7 +21,9 @@ jobs:
       - name: Install npm package(s)
         run: npm install --no-save --ignore-scripts ${{ matrix.node-package }}
       - name: Remove some files
-        run: find node_modules/core-js -type f -name ${{ matrix.name }} -delete
+        run: |
+          find node_modules/core-js -type f -name *.js -delete
+          find node_modules/core-js -type f -name ${{ matrix.name }} -delete
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
