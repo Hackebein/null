@@ -21,7 +21,12 @@ jobs:
         # Actual behavior: 'invalid reference format: repository name must be lowercase'
         name: Build container(s) in docker-compose.fails.yml
         #run: docker-compose -f docker-compose.fails.yml build
-        run: "docker-compose -f docker-compose.fails.yml build 2>&1 | grep -q 'invalid reference format: repository name must be lowercase' && exit 1 || exit 0"
+        run: |
+          output=$(docker-compose -f docker-compose.fails.yml build 2>&1)
+          echo "${output}"
+          if ! grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
+            exit 1
+          fi
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
@@ -29,6 +34,7 @@ jobs:
   with-node:
     runs-on: ${{ matrix.virtual-environment }}
     strategy:
+      fail-fast: false
       matrix:
         #virtual-environment: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
         virtual-environment: [ubuntu-20.04]
@@ -56,7 +62,12 @@ jobs:
         # Actual behavior: 'Couldn't connect to Docker daemon at http+docker://localhost - is it running?'
         name: Build container(s) in docker-compose.fails.yml
         #run: docker-compose -f docker-compose.fails.yml build
-        run: "docker-compose -f docker-compose.fails.yml build 2>&1 | grep -q 'invalid reference format: repository name must be lowercase' && exit 1 || exit 0"
+        run: |
+          output=$(docker-compose -f docker-compose.fails.yml build 2>&1)
+          echo "${output}"
+          if ! grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
+            exit 1
+          fi
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
