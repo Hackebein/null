@@ -7,43 +7,9 @@ jobs:
       fail-fast: false
       matrix:
         virtual-environment: [ubuntu-20.04]
-        folders: [".git", "test", ".git test"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: rm -rf ${{ matrix.folders }}
-      - # Expecting: build ok
-        # Actual behavior: build ok
-        name: Build container(s) in docker-compose.works.yml
-        run: docker-compose -f docker-compose.works.yml --verbose build
-      - # Expecting: 'invalid reference format: repository name must be lowercase'
-        # Actual behavior: 'Couldn't connect to Docker daemon at http+docker://localhost - is it running?'
-        name: Build container(s) in docker-compose.fails.yml
-        #run: docker-compose -f docker-compose.fails.yml build
-        run: |
-          output=$(docker-compose -f docker-compose.fails.yml --verbose build 2>&1 || true)
-          echo "${output}"
-          if ! grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
-            exit 1
-          fi
-      - # Expecting: build ok
-        # Actual behavior: build ok
-        name: Build container(s) in docker-compose.works.yml
-        run: docker-compose -f docker-compose.works.yml --verbose build
-  test2:
-    runs-on: ${{ matrix.virtual-environment }}
-    strategy:
-      fail-fast: false
-      matrix:
-        virtual-environment: [ubuntu-20.04]
-        folders1: ["", ".git"]
-        folders2: ["ajv", "asn1", "assert-plus", "asynckit", "aws-sign2", "aws4", "bcrypt-pbkdf", "caseless", "core-util-is", "dashdash", "ecc-jsbn", "extend", "extsprintf", "fast-deep-equal", "fast-json-stable-stringify", "forever-agent", "form-data", "getpass", "har-schema", "har-validator", "http-signature", "is-typedarray", "isstream", "jsbn", "json-schema", "json-schema-traverse", "json-stringify-safe", "jsprim", "mime-db", "mime-types", "oauth-sign", "performance-now", "psl", "punycode", "qs", "safe-buffer", "sshpk", "tough-cookie", "tunnel-agent", "tweetnacl", "uri-js", "uuid", "verror"]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - run: |
-          find test -mindepth 1 -maxdepth 1 -type d ! -name ${{ matrix.folders2 }} -exec rm -rf ${{ matrix.folders1 }} {} \;
-          find .
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
