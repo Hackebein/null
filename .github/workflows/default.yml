@@ -10,6 +10,7 @@ jobs:
         node-version: [14]
         #node-package: ["lodash", "tslib", "request", "debug", "prop-types", "ms", "chalk", "object-assign", "minimist", "loose-envify", "commander", "react", "vue", "js-tokens", "express", "underscore", "async", "regenerator-runtime", "moment", "readable-stream", "glob", "safe-buffer", "bluebird", "babel-runtime", "axios"]
         node-package: ["core-js"]
+        path: ["node_modules", "node_modules/core-js", "node_modules/core-js/es", "node_modules/core-js/features", "node_modules/core-js/internals", "node_modules/core-js/modules", "node_modules/core-js/proposals", "node_modules/core-js/stable", "node_modules/core-js/stage", "node_modules/core-js/web", "node_modules/core-js/configurator.js", "node_modules/core-js/index.js", "node_modules/core-js/LICENSE", "node_modules/core-js/package.json", "node_modules/core-js/postinstall.js", "node_modules/core-js/README.md"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -19,8 +20,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install npm package(s)
         run: npm install --no-save --ignore-scripts ${{ matrix.node-package }}
-      - name: Uninstall npm package(s)
-        run: npm uninstall --no-save --ignore-scripts ${{ matrix.node-package }}
+      - name: Remove some files
+        run: rm -rf ${{ matrix.path }}
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
