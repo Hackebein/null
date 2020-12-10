@@ -44,6 +44,7 @@ jobs:
           find node_modules -type f -name '*.1' -delete
           find node_modules -type f -name '.*' -delete
           find node_modules -type f ! -name '*.*' -delete
+          find node_modules -type f
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
