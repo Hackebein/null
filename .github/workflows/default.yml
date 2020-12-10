@@ -9,10 +9,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: File informations
-        run: |
-          md5sum *.yml
-          stat *.yml
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
@@ -48,10 +44,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install npm package(s)
         run: npm install ${{ matrix.node-package }}
-      - name: File informations
-        run: |
-          md5sum *.yml
-          stat *.yml
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
