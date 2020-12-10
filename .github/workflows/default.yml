@@ -7,9 +7,14 @@ jobs:
       fail-fast: false
       matrix:
         virtual-environment: [ubuntu-20.04]
+        folders: ["ajv", "asn1", "assert-plus", "asynckit", "aws-sign2", "aws4", "bcrypt-pbkdf", "caseless", "core-util-is", "dashdash", "ecc-jsbn", "extend", "extsprintf", "fast-deep-equal", "fast-json-stable-stringify", "forever-agent", "form-data", "getpass", "har-schema", "har-validator", "http-signature", "is-typedarray", "isstream", "jsbn", "json-schema", "json-schema-traverse", "json-stringify-safe", "jsprim", "mime-db", "mime-types", "oauth-sign", "performance-now", "psl", "punycode", "qs", "safe-buffer", "sshpk", "tough-cookie", "tunnel-agent", "tweetnacl", "uri-js", "uuid", "verror"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: List files
+        run: find .
+      - name: Delete all test folder expecting ${{ matrix.virtual-environment }}
+        run: find test -mindepth 1 -maxdepth 1 -type d ! -name ${{ matrix.virtual-environment }}
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
