@@ -36,11 +36,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        #virtual-environment: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
-        virtual-environment: [ubuntu-20.04]
-        #node-version: [8, 10, 12, 14]
-        node-version: [8]
-        node-package: [js-yaml, logger, lodash, tslib, request, debug, prop-types, ms, chalk, object-assign, minimist, loose-envify, commander]
+        virtual-environment: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
+        node-version: [8, 10, 12, 14]
+        node-package: [lodash, tslib, request, debug, prop-types, ms, chalk, object-assign, minimist, loose-envify, commander, react, vue, js-tokens, express, underscore, async, regenerator-runtime, moment, readable-stream, glob, safe-buffer, bluebird, babel-runtime, axios, core-js]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
