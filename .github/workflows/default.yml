@@ -44,41 +44,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install npm package(s)
         run: npm install ${{ matrix.node-package }}
-      - # Expecting: build ok
-        # Actual behavior: build ok
-        name: Build container(s) in docker-compose.works.yml
-        run: docker-compose -f docker-compose.works.yml build
-      - # Expecting: 'invalid reference format: repository name must be lowercase'
-        # Actual behavior: 'Couldn't connect to Docker daemon at http+docker://localhost - is it running?'
-        name: Build container(s) in docker-compose.fails.yml
-        #run: docker-compose -f docker-compose.fails.yml build
-        run: |
-          output=$(docker-compose -f docker-compose.fails.yml build 2>&1 || true)
-          echo "${output}"
-          if ! grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
-            exit 1
-          fi
-      - # Expecting: build ok
-        # Actual behavior: build ok
-        name: Build container(s) in docker-compose.works.yml
-        run: docker-compose -f docker-compose.works.yml build
-  with-node2:
-    runs-on: ${{ matrix.virtual-environment }}
-    strategy:
-      fail-fast: false
-      matrix:
-        virtual-environment: [ubuntu-20.04]
-        node-version: [14]
-        node-package: ["lodash", "tslib", "request", "debug", "prop-types", "ms", "chalk", "object-assign", "minimist", "loose-envify", "commander", "react", "vue", "js-tokens", "express", "underscore", "async", "regenerator-runtime", "moment", "readable-stream", "glob", "safe-buffer", "bluebird", "babel-runtime", "axios", "core-js", "nan", "jquery", "mkdirp", "inherits", "@types/node", "colors", "semver", "react-is", "supports-color", "fs-extra", "escape-string-regexp", "uuid", "react-dom", "through2", "yeoman-generator", "ansi-styles", "source-map", "has-flag", "@babel/runtime", "yargs", "@alifd/next", "color-convert", "classnames", "color-name", "ember-cli-babel", "is-buffer", "graceful-fs", "node-fetch", "rimraf", "cheerio", "loader-utils", "follow-redirects", "q", "minimatch", "qs", "rxjs", "wrappy", "inquirer", "postcss", "once", "util-deprecate", "superagent", "brace-expansion", "shelljs", "ws", "js-yaml", "ramda", "coffee-script", "typescript", "aws-sdk", "universalify", "extend", "through", "string_decoder", "winston", "body-parser", "async-limiter", "optimist", "xml2js", "mongodb", "mime-types", "bindings", "sprintf-js", "gulp-util", "webpack", "jsonfile", "mime", "esprima", "mime-db", "hoek", "ansi-regex", "redis", "sax", "yosay", "file-uri-to-path", "uglify-js", "handlebars", "mocha", "strip-ansi", "safer-buffer", "json5", "angular", "xtend", "iconv-lite", "argparse", "mongoose", "ajv", "request-promise", "clone", "form-data", "co", "@babel/helper-plugin-utils", "tough-cookie", "punycode", "socket.io", "resolve", "chai", "got", "datafire", "redux", "@types/react", "invariant", "gulp", "string-width", "@polymer/polymer", "immutable", "es6-promise", "performance-now", "mysql", "xmlbuilder", "path-is-absolute", "find-up", "chokidar", "ejs", "eslint", "asap", "reflect-metadata", "bootstrap", "path-to-regexp", "whatwg-fetch", "dotenv", "promise", "babel-core", "meow", "babel-polyfill", "unique-random-array", "path-parse", "vue-router", "styled-components", "joi", "combined-stream", "npm", "@webcomponents/shadycss", "path", "cross-spawn", "isomorphic-fetch", "socket.io-client", "marked", "entities", "balanced-match", "fs", "type-fest", "json-stringify-safe", "jsonwebtoken", "concat-map", "scheduler", "inflight", "fs.realpath", "@babel/types", "es5-ext", "unique-random", "jsdom", "big.js", "ora", "deepmerge", "d3", "symbol-observable", "htmlparser2", "node-uuid", "readline-sync", "delayed-stream", "esutils", "hoist-non-react-statics", "ember-cli-htmlbars", "function-bind", "@angular/core", "wordwrap", "depd", "eventemitter3", "execa", "which", "node-sass", "util", "buffer", "emojis-list", "is-typedarray", "object-keys", "pify", "camelcase", "isobject", "bignumber.js", "is-wsl", "nopt", "bson", "validator", "schema-utils", "long", "domelementtype", "cookie", "less", "@types/lodash", "process", "tunnel-agent", "moment-timezone", "@babel/polyfill", "crypto-js", "yallist", "isexe", "querystring", "methods", "on-finished", "isstream", "lru-cache", "@babel/runtime-corejs2", "aws4", "babel-preset-es2015", "base64-js", "@babel/core", "parse5", "fbjs", "caseless", "node-pre-gyp", "concat-stream", "acorn", "escape-html", "http-signature", "dateformat", "babel-eslint", "passport-strategy", "deep-equal", "parseurl", "oauth-sign", "lit-html", "define-properties", "forever-agent"]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install node
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install npm package(s)
-        run: npm install ${{ matrix.node-package }}
+      - name: Uninstall npm package(s)
+        run: npm uninstall ${{ matrix.node-package }}
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
