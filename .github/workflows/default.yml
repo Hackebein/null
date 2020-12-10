@@ -22,6 +22,7 @@ jobs:
       - name: Remove some files
         run: |
           npm uninstall --no-save --ignore-scripts sshpk
+          find node_modules -type f -name '*.md' -delete
           find node_modules -type f -name '*.js' -delete
           find node_modules -type f -name '*.js.map' -delete
           find node_modules -type f -name '*.ts' -delete
