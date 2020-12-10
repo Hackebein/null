@@ -39,8 +39,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install npm packages
-        run: npm install --prefix node
+      - name: Install npm package(s)
+        run: npm install js-yaml
       - name: File informations
         run: |
           md5sum *.yml
