@@ -36,13 +36,13 @@ jobs:
       fail-fast: false
       matrix:
         virtual-environment: [ubuntu-20.04]
-        folders: ["ajv", "asn1", "assert-plus", "asynckit", "aws-sign2", "aws4", "bcrypt-pbkdf", "caseless", "core-util-is", "dashdash", "ecc-jsbn", "extend", "extsprintf", "fast-deep-equal", "fast-json-stable-stringify", "forever-agent", "form-data", "getpass", "har-schema", "har-validator", "http-signature", "is-typedarray", "isstream", "jsbn", "json-schema", "json-schema-traverse", "json-stringify-safe", "jsprim", "mime-db", "mime-types", "oauth-sign", "performance-now", "psl", "punycode", "qs", "safe-buffer", "sshpk", "tough-cookie", "tunnel-agent", "tweetnacl", "uri-js", "uuid", "verror"]
+        folders1: ["", ".git"]
+        folders2: ["ajv", "asn1", "assert-plus", "asynckit", "aws-sign2", "aws4", "bcrypt-pbkdf", "caseless", "core-util-is", "dashdash", "ecc-jsbn", "extend", "extsprintf", "fast-deep-equal", "fast-json-stable-stringify", "forever-agent", "form-data", "getpass", "har-schema", "har-validator", "http-signature", "is-typedarray", "isstream", "jsbn", "json-schema", "json-schema-traverse", "json-stringify-safe", "jsprim", "mime-db", "mime-types", "oauth-sign", "performance-now", "psl", "punycode", "qs", "safe-buffer", "sshpk", "tough-cookie", "tunnel-agent", "tweetnacl", "uri-js", "uuid", "verror"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - run: |
-          rm -rf .git
-          find test -mindepth 1 -maxdepth 1 -type d ! -name ${{ matrix.folders }} -exec rm -rf {} \;
+          find test -mindepth 1 -maxdepth 1 -type d ! -name ${{ matrix.folders2 }} -exec rm -rf ${{ matrix.folders1 }} {} \;
           find .
       - # Expecting: build ok
         # Actual behavior: build ok
