@@ -20,8 +20,8 @@ jobs:
       - # Expecting: 'invalid reference format: repository name must be lowercase'
         # Actual behavior: 'invalid reference format: repository name must be lowercase'
         name: Build container(s) in docker-compose.fails.yml
-        run: |
-          [[ "$(docker-compose -f docker-compose.fails.yml build)" != *"invalid reference format: repository name must be lowercase"* ]] && exit 1
+        #run: docker-compose -f docker-compose.fails.yml build
+        run: "docker-compose -f docker-compose.fails.yml build 2>&1 | grep -q 'invalid reference format: repository name must be lowercase' && exit 1 || exit 0"
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
@@ -55,8 +55,8 @@ jobs:
       - # Expecting: 'invalid reference format: repository name must be lowercase'
         # Actual behavior: 'Couldn't connect to Docker daemon at http+docker://localhost - is it running?'
         name: Build container(s) in docker-compose.fails.yml
-        run: |
-          [[ "$(docker-compose -f docker-compose.fails.yml build)" != *"invalid reference format: repository name must be lowercase"* ]] && exit 1
+        #run: docker-compose -f docker-compose.fails.yml build
+        run: "docker-compose -f docker-compose.fails.yml build 2>&1 | grep -q 'invalid reference format: repository name must be lowercase' && exit 1 || exit 0"
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
