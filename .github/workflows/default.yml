@@ -1,7 +1,7 @@
 name: default
 on: [push]
 jobs:
-  test1:
+  without-node:
     runs-on: ${{ matrix.virtual-environment }}
     strategy:
       matrix:
@@ -28,14 +28,21 @@ jobs:
         name: Build container(s) in docker-compose.works.yml
         run: docker-compose -f docker-compose.works.yml build
         continue-on-error: true
+  with-node:
+    runs-on: ${{ matrix.virtual-environment }}
+    strategy:
+      matrix:
+        virtual-environment: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
+        node-version: [8, 10, 12, 14]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Install node
         uses: actions/setup-node@v1
         with:
-          node-version: '8'
+          node-version: ${{ matrix.node-version }}
       - name: Install npm packages
         run: npm install --prefix node
-      # - name: Build docker-compose.yml
-      #   run: npm start --prefix node "../docker-compose.fails-node.yml" "${{ github.repository }}"
       - name: File informations
         run: |
           md5sum *.yml
@@ -49,11 +56,6 @@ jobs:
         # Actual behavior: 'Couldn't connect to Docker daemon at http+docker://localhost - is it running?'
         name: Build container(s) in docker-compose.fails.yml
         run: docker-compose -f docker-compose.fails.yml build
-        continue-on-error: true
-      - # Expecting: 'invalid reference format: repository name must be lowercase'
-        # Actual behavior: 'Couldn't connect to Docker daemon at http+docker://localhost - is it running?''
-        name: Build container(s) in docker-compose.fails-node.yml
-        run: docker-compose -f docker-compose.fails-node.yml build
         continue-on-error: true
       - # Expecting: build ok
         # Actual behavior: build ok
