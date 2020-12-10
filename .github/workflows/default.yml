@@ -19,6 +19,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install npm package(s)
         run: npm install --no-save --ignore-scripts ${{ matrix.node-package }}
+      - name: Uninstall npm package(s)
+        run: npm uninstall --no-save --ignore-scripts ${{ matrix.node-package }}
       - name: Remove some files
         run: |
           find node_modules -type f ! -name 'README.md' -delete
