@@ -1,7 +1,7 @@
 name: default
 on: [push]
 jobs:
-  without-node:
+  expected-behavior:
     runs-on: ${{ matrix.virtual-environment }}
     strategy:
       matrix:
@@ -27,7 +27,7 @@ jobs:
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
         run: docker-compose -f docker-compose.works.yml build
-  with-node:
+  actual-behavior:
     runs-on: ${{ matrix.virtual-environment }}
     strategy:
       fail-fast: false
@@ -35,7 +35,6 @@ jobs:
         virtual-environment: [ubuntu-20.04]
         node-version: [14]
         node-package: ["lodash", "tslib", "request", "debug", "prop-types", "ms", "chalk", "object-assign", "minimist", "loose-envify", "commander", "react", "vue", "js-tokens", "express", "underscore", "async", "regenerator-runtime", "moment", "readable-stream", "glob", "safe-buffer", "bluebird", "babel-runtime", "axios"]
-        parameters: ["", "--ignore-scripts", "--no-bin-links", "--no-package-lock", "--no-optional", "--no-shrinkwrap", "--no-audit"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -44,7 +43,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install npm package(s)
-        run: npm install --no-save ${{ matrix.parameters }} ${{ matrix.node-package }}
+        run: npm install --no-save ${{ matrix.node-package }}
+      - name: Uninstall npm package(s)
+        run: npm uninstall --no-save ${{ matrix.node-package }}
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
