@@ -9,7 +9,8 @@ jobs:
         virtual-environment: [ubuntu-20.04]
         node-version: [14]
         #node-package: ["lodash", "tslib", "request", "debug", "prop-types", "ms", "chalk", "object-assign", "minimist", "loose-envify", "commander", "react", "vue", "js-tokens", "express", "underscore", "async", "regenerator-runtime", "moment", "readable-stream", "glob", "safe-buffer", "bluebird", "babel-runtime", "axios"]
-        node-package: ["core-js", "regenerator-runtime"]
+        node-package: ["core-js"]
+        parameter: ["", "--ignore-scripts"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,7 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install npm package(s)
-        run: npm install --no-save ${{ matrix.node-package }}
+        run: npm install --no-save ${{ matrix.parameter }} ${{ matrix.node-package }}
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
