@@ -34,7 +34,7 @@ jobs:
       matrix:
         virtual-environment: [ubuntu-20.04, ubuntu-18.04, ubuntu-16.04]
         node-version: [10, 12, 14]
-        node-package: [lodash, tslib, request, debug, prop-types]
+        node-package: ["lodash", "tslib", "request", "debug", "prop-types", "ms", "chalk", "object-assign", "minimist", "loose-envify", "commander", "react", "vue", "js-tokens", "express", "underscore", "async", "regenerator-runtime", "moment", "readable-stream", "glob", "safe-buffer", "bluebird", "babel-runtime", "axios"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
