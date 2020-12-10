@@ -11,10 +11,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: List files
-        run: find .
       - name: Delete all test folder expecting ${{ matrix.virtual-environment }}
-        run: find test -mindepth 1 -maxdepth 1 -type d ! -name ${{ matrix.virtual-environment }}
+        run: |
+          find test -mindepth 1 -maxdepth 1 -type d ! -name ${{ matrix.virtual-environment }}
+          find .
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
