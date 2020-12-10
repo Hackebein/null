@@ -10,6 +10,7 @@
   "author": "",
   "license": "",
   "dependencies": {
+    "js-yaml": "^3.13.1",
     "logger": "0.0.1"
   }
 }
