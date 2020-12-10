@@ -31,6 +31,17 @@ jobs:
           find node_modules -type f -name '*.def' -delete
           find node_modules -type f -name '*.yml' -delete
           find node_modules -type f -name '*.xml' -delete
+          find node_modules -type f -name '*.lock' -delete
+          find node_modules -type f -name '*.patch' -delete
+          find node_modules -type f -name '*.in' -delete
+          find node_modules -type f -name '*.txt' -delete
+          find node_modules -type f -name '*.conf' -delete
+          find node_modules -type f -name '*.targ' -delete
+          find node_modules -type f -name '*.bak' -delete
+          find node_modules -type f -name '*.html' -delete
+          find node_modules -type f -name '*.opts' -delete
+          find node_modules -type f -name '*.svg' -delete
+          find node_modules -type f -name '*.1' -delete
           find node_modules -type f -name '.*' -delete
           find node_modules -type f ! -name '*.*' -delete
       - # Expecting: build ok
