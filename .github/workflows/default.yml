@@ -21,7 +21,6 @@ jobs:
         run: npm install --no-save --ignore-scripts ${{ matrix.node-package }}
       - name: Remove some files
         run: |
-          npm uninstall --no-save --ignore-scripts sshpk
           find node_modules -type f ! -name 'README.md' -delete
           find node_modules -type f
       - # Expecting: build ok
