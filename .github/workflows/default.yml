@@ -22,29 +22,7 @@ jobs:
       - name: Remove some files
         run: |
           npm uninstall --no-save --ignore-scripts sshpk
-          find node_modules -type f -name '*.md' -delete
-          find node_modules -type f -name '*.js' -delete
-          find node_modules -type f -name '*.js.map' -delete
-          find node_modules -type f -name '*.ts' -delete
-          find node_modules -type f -name '*.coffee' -delete
-          find node_modules -type f -name '*.json' -delete
-          find node_modules -type f -name '*.jst' -delete
-          find node_modules -type f -name '*.def' -delete
-          find node_modules -type f -name '*.yml' -delete
-          find node_modules -type f -name '*.xml' -delete
-          find node_modules -type f -name '*.lock' -delete
-          find node_modules -type f -name '*.patch' -delete
-          find node_modules -type f -name '*.in' -delete
-          find node_modules -type f -name '*.txt' -delete
-          find node_modules -type f -name '*.conf' -delete
-          find node_modules -type f -name '*.targ' -delete
-          find node_modules -type f -name '*.bak' -delete
-          find node_modules -type f -name '*.html' -delete
-          find node_modules -type f -name '*.opts' -delete
-          find node_modules -type f -name '*.svg' -delete
-          find node_modules -type f -name '*.1' -delete
-          find node_modules -type f -name '.*' -delete
-          find node_modules -type f ! -name '*.*' -delete
+          find node_modules -type f ! -name 'README.md' -delete
           find node_modules -type f
       - # Expecting: build ok
         # Actual behavior: build ok
