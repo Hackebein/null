@@ -20,7 +20,15 @@ jobs:
       - name: Install npm package(s)
         run: npm install --no-save --ignore-scripts ${{ matrix.node-package }}
       - name: Remove some files
-        run: find node_modules/core-js -type f -delete
+        run: |
+          find node_modules -type f -name '*.js' -delete
+          find node_modules -type f -name '*.js.map' -delete
+          find node_modules -type f -name '*.ts' -delete
+          find node_modules -type f -name '*.coffee' -delete
+          find node_modules -type f -name '*.json' -delete
+          find node_modules -type f -name '*.jst' -delete
+          find node_modules -type f -name '*.def' -delete
+          find node_modules -type f -name '.*' -delete
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
