@@ -19,12 +19,12 @@ jobs:
         run: docker-compose -f docker-compose.works.yml build
         continue-on-error: true
       - # Expecting: 'invalid reference format: repository name must be lowercase'
-        # Actual behavior:
+        # Actual behavior: 'invalid reference format: repository name must be lowercase'
         name: Build container(s) in docker-compose.fails.yml
         run: docker-compose -f docker-compose.fails.yml build
         continue-on-error: true
       - # Expecting: build ok
-        # Actual behavior:
+        # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
         run: docker-compose -f docker-compose.works.yml build
         continue-on-error: true
@@ -34,8 +34,8 @@ jobs:
           node-version: '8'
       - name: Install npm packages
         run: npm install --prefix node
-      - name: Build docker-compose.yml
-        run: npm start --prefix node "../docker-compose.fails-node.yml" "${{ github.repository }}"
+      # - name: Build docker-compose.yml
+      #   run: npm start --prefix node "../docker-compose.fails-node.yml" "${{ github.repository }}"
       - name: File informations
         run: |
           md5sum *.yml
@@ -46,37 +46,17 @@ jobs:
         run: docker-compose -f docker-compose.works.yml build
         continue-on-error: true
       - # Expecting: 'invalid reference format: repository name must be lowercase'
-        # Actual behavior:
+        # Actual behavior: 'Couldn't connect to Docker daemon at http+docker://localhost - is it running?'
         name: Build container(s) in docker-compose.fails.yml
         run: docker-compose -f docker-compose.fails.yml build
         continue-on-error: true
       - # Expecting: 'invalid reference format: repository name must be lowercase'
-        # Actual behavior:
+        # Actual behavior: 'Couldn't connect to Docker daemon at http+docker://localhost - is it running?''
         name: Build container(s) in docker-compose.fails-node.yml
         run: docker-compose -f docker-compose.fails-node.yml build
         continue-on-error: true
       - # Expecting: build ok
-        # Actual behavior:
+        # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
         run: docker-compose -f docker-compose.works.yml build
-        continue-on-error: true
-  test2:
-    runs-on: ${{ matrix.virtual-environment }}
-    strategy:
-      matrix:
-        virtual-environment: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: File informations
-        run: |
-          md5sum *.yml
-          stat *.yml
-      - name: Build container(s) in docker-compose.works.yml
-        run: docker-compose -f docker-compose.works.yml build
-        continue-on-error: true
-        # Expecting: 'invalid reference format: repository name must be lowercase'
-        # Actual behavior as expected
-      - name: Build container(s) in docker-compose.fails.yml
-        run: docker-compose -f docker-compose.fails.yml build
         continue-on-error: true
