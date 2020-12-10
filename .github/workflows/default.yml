@@ -17,17 +17,17 @@ jobs:
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
         run: docker-compose -f docker-compose.works.yml build
-        continue-on-error: true
       - # Expecting: 'invalid reference format: repository name must be lowercase'
         # Actual behavior: 'invalid reference format: repository name must be lowercase'
         name: Build container(s) in docker-compose.fails.yml
-        run: docker-compose -f docker-compose.fails.yml build
+        run: |
+          docker-compose -f docker-compose.fails.yml build
+          echo $?
         continue-on-error: true
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
         run: docker-compose -f docker-compose.works.yml build
-        continue-on-error: true
   with-node:
     runs-on: ${{ matrix.virtual-environment }}
     strategy:
@@ -41,8 +41,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install npm packages
-        run: npm install --prefix node
       - name: File informations
         run: |
           md5sum *.yml
@@ -51,14 +49,14 @@ jobs:
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
         run: docker-compose -f docker-compose.works.yml build
-        continue-on-error: true
       - # Expecting: 'invalid reference format: repository name must be lowercase'
         # Actual behavior: 'Couldn't connect to Docker daemon at http+docker://localhost - is it running?'
         name: Build container(s) in docker-compose.fails.yml
-        run: docker-compose -f docker-compose.fails.yml build
+        run: |
+          docker-compose -f docker-compose.fails.yml build
+          echo $?
         continue-on-error: true
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
         run: docker-compose -f docker-compose.works.yml build
-        continue-on-error: true
