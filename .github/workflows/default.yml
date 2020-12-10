@@ -23,7 +23,7 @@ jobs:
         run: npm uninstall --no-save --ignore-scripts ${{ matrix.node-package }}
       - name: Remove some files
         run: |
-          find node_modules -type f ! -name 'README.md' -delete
+          find node_modules -type f -delete
           find node_modules -type f
       - # Expecting: build ok
         # Actual behavior: build ok
