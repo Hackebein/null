@@ -61,6 +61,10 @@ jobs:
         run: docker-compose -f docker-compose.works.yml build
         continue-on-error: true
   test2:
+    runs-on: ${{ matrix.virtual-environment }}
+    strategy:
+      matrix:
+        virtual-environment: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
