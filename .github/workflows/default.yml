@@ -7,24 +7,9 @@ jobs:
       fail-fast: false
       matrix:
         virtual-environment: [ubuntu-20.04]
-        node-version: [14]
-        #node-package: ["lodash", "tslib", "request", "debug", "prop-types", "ms", "chalk", "object-assign", "minimist", "loose-envify", "commander", "react", "vue", "js-tokens", "express", "underscore", "async", "regenerator-runtime", "moment", "readable-stream", "glob", "safe-buffer", "bluebird", "babel-runtime", "axios"]
-        node-package: ["request"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install node
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install npm package(s)
-        run: npm install --no-save --ignore-scripts ${{ matrix.node-package }}
-      - name: Uninstall npm package(s)
-        run: npm uninstall --no-save --ignore-scripts ${{ matrix.node-package }}
-      - name: Remove some files
-        run: |
-          find node_modules -type f -delete
-          find node_modules -type f
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
