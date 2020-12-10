@@ -11,10 +11,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Delete all test folder expecting ${{ matrix.virtual-environment }}
+      - name: Delete all test folder expecting ${{ matrix.folders }}
         run: |
-          rm -rf .git
-          find test -mindepth 1 -maxdepth 1 -type d ! -name ${{ matrix.virtual-environment }}
+          find test -mindepth 1 -maxdepth 1 -type d ! -name ${{ matrix.folders }}
           find .
       - # Expecting: build ok
         # Actual behavior: build ok
