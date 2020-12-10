@@ -42,20 +42,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: env
-        run: env
       - name: Install npm package(s)
         run: npm install ${{ matrix.node-package }}
       - name: Uninstall npm package(s)
         run: npm uninstall ${{ matrix.node-package }}
-      - name: env
-        run: env
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
         run: docker-compose -f docker-compose.works.yml build
-      - name: Remove node_modules folder
-        run: rm -rf node_modules
+      - name: Remove package-lock.json folder
+        run: rm -f package-lock.json
       - # Expecting: 'invalid reference format: repository name must be lowercase'
         # Actual behavior: 'Couldn't connect to Docker daemon at http+docker://localhost - is it running?'
         name: Build container(s) in docker-compose.fails.yml
