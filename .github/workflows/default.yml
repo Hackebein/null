@@ -1,40 +1,15 @@
 name: default
 on: [push]
 jobs:
-  expected-behavior:
-    runs-on: ${{ matrix.virtual-environment }}
-    strategy:
-      matrix:
-        virtual-environment: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - # Expecting: build ok
-        # Actual behavior: build ok
-        name: Build container(s) in docker-compose.works.yml
-        run: docker-compose -f docker-compose.works.yml build
-      - # Expecting: 'invalid reference format: repository name must be lowercase'
-        # Actual behavior: 'invalid reference format: repository name must be lowercase'
-        name: Build container(s) in docker-compose.fails.yml
-        #run: docker-compose -f docker-compose.fails.yml build
-        run: |
-          output=$(docker-compose -f docker-compose.fails.yml build 2>&1 || true)
-          echo "${output}"
-          if ! grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
-            exit 1
-          fi
-      - # Expecting: build ok
-        # Actual behavior: build ok
-        name: Build container(s) in docker-compose.works.yml
-        run: docker-compose -f docker-compose.works.yml build
-  actual-behavior:
+  test:
     runs-on: ${{ matrix.virtual-environment }}
     strategy:
       fail-fast: false
       matrix:
         virtual-environment: [ubuntu-20.04]
         node-version: [14]
-        node-package: ["lodash", "tslib", "request", "debug", "prop-types", "ms", "chalk", "object-assign", "minimist", "loose-envify", "commander", "react", "vue", "js-tokens", "express", "underscore", "async", "regenerator-runtime", "moment", "readable-stream", "glob", "safe-buffer", "bluebird", "babel-runtime", "axios"]
+        #node-package: ["lodash", "tslib", "request", "debug", "prop-types", "ms", "chalk", "object-assign", "minimist", "loose-envify", "commander", "react", "vue", "js-tokens", "express", "underscore", "async", "regenerator-runtime", "moment", "readable-stream", "glob", "safe-buffer", "bluebird", "babel-runtime", "axios"]
+        node-package: ["core-js", "regenerator-runtime"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -44,8 +19,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install npm package(s)
         run: npm install --no-save ${{ matrix.node-package }}
-      - name: Uninstall npm package(s)
-        run: npm uninstall --no-save ${{ matrix.node-package }}
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
