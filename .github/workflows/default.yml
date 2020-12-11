@@ -24,7 +24,7 @@ jobs:
           if grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
             exit 1
           fi
-          for i in $(find node_modules -type f | grep -v 'json-schema' | sort -R); do
+          for i in $(find node_modules -type f | grep -v 'json-schema' | grep -v 'sshpk' | sort -R); do
             echo item: $i
             rm $i
             find node_modules -type d -empty -delete
