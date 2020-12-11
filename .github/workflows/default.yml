@@ -10,4 +10,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: uname -a
+      - run: sudo usermod -aG docker ${USER}
+      - run: |
+        output=$(docker-compose -f docker-compose.fails.yml build 2>&1 || true)
+        echo "${output}"
+        if ! grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
+          exit 1
+        fi
