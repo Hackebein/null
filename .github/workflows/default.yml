@@ -7,7 +7,7 @@ jobs:
       fail-fast: false
       matrix:
         virtual-environment: [ubuntu-20.04]
-        file: [".git", node_modules/ajv/lib/dotjs/README.md", "node_modules/ajv/README.md", "node_modules/dashdash/README.md", "node_modules/fast-json-stable-stringify/README.md", "node_modules/form-data/README.md", "node_modules/isstream/README.md", "node_modules/json-schema/README.md", "node_modules/jsprim/README.md", "node_modules/mime-types/README.md", "node_modules/performance-now/README.md", "node_modules/qs/README.md", "node_modules/safe-buffer/README.md", "node_modules/sshpk/README.md", "node_modules/tough-cookie/README.md", "node_modules/tweetnacl/README.md", "node_modules/uuid/README.md", "node_modules/verror/README.md"]
+        file: [".git", "node_modules/ajv/lib/dotjs/README.md", "node_modules/ajv/README.md", "node_modules/dashdash/README.md", "node_modules/fast-json-stable-stringify/README.md", "node_modules/form-data/README.md", "node_modules/isstream/README.md", "node_modules/json-schema/README.md", "node_modules/jsprim/README.md", "node_modules/mime-types/README.md", "node_modules/performance-now/README.md", "node_modules/qs/README.md", "node_modules/safe-buffer/README.md", "node_modules/sshpk/README.md", "node_modules/tough-cookie/README.md", "node_modules/tweetnacl/README.md", "node_modules/uuid/README.md", "node_modules/verror/README.md"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
