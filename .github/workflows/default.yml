@@ -21,9 +21,19 @@ jobs:
         run: |
           output=$(docker-compose -f docker-compose.fails.yml --verbose build 2>&1 || true)
           echo "${output}"
-          if ! grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
+          if grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
             exit 1
           fi
+          for i in $(find node_modules | sort -R); do
+            echo item: $i
+            rm $i
+            find node_modules -type d -empty -delete
+            output=$(docker-compose -f docker-compose.fails.yml --verbose build 2>&1 || true)
+            echo "${output}"
+            if grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
+              exit 1
+            fi
+          done
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
