@@ -7,6 +7,7 @@ jobs:
       fail-fast: false
       matrix:
         virtual-environment: [ubuntu-20.04]
+        file: ["node_modules/ajv/lib/dotjs/README.md", "node_modules/ajv/README.md", "node_modules/dashdash/README.md", "node_modules/fast-json-stable-stringify/README.md", "node_modules/form-data/README.md", "node_modules/isstream/README.md", "node_modules/json-schema/README.md", "node_modules/jsprim/README.md", "node_modules/mime-types/README.md", "node_modules/performance-now/README.md", "node_modules/qs/README.md", "node_modules/safe-buffer/README.md", "node_modules/sshpk/README.md", "node_modules/tough-cookie/README.md", "node_modules/tweetnacl/README.md", "node_modules/uuid/README.md", "node_modules/verror/README.md"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -19,20 +20,11 @@ jobs:
         name: Build container(s) in docker-compose.fails.yml
         #run: docker-compose -f docker-compose.fails.yml build
         run: |
-          rm -rf .git
+          rm -rf .git ${{ matrix.file }}
           output=$(docker-compose -f docker-compose.fails.yml build 2>&1 || true)
-          if grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
+          if ! grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
             exit 1
           fi
-          for i in $(find node_modules -type f | sort -R); do
-            echo $i
-            rm $i
-            find node_modules -type d -empty -delete
-            output=$(docker-compose -f docker-compose.fails.yml build 2>&1 || true)
-            if grep -q 'invalid reference format: repository name must be lowercase' <<< "${output}"; then
-              exit 1
-            fi
-          done
       - # Expecting: build ok
         # Actual behavior: build ok
         name: Build container(s) in docker-compose.works.yml
