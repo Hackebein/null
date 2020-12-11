@@ -10,5 +10,4 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: docker-compose version
-      - run: docker version
+      - run: uname -a
